@@ -9,11 +9,13 @@
     <name>Spring Cloud YES</name>
     <packaging>pom</packaging>
 
-
     <modules>
         <module>eureka-server</module>
         <module>config-server</module>
         <module>turbine-stream-server</module>
+        <module>zuul-server</module>
+        <module>zipkin-server</module>
+        <module>hystrix-dashboard</module>
     </modules>
 
     <repositories>

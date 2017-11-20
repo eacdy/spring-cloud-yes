@@ -1,0 +1,4 @@
+management:
+  port: 5567
+server:
+  port: 5566

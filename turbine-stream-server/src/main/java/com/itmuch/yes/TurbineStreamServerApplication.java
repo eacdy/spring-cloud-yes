@@ -1,4 +1,4 @@
-package com.migu.tsg.mircoservice.tubine;
+package com.itmuch.yes;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,6 +1,6 @@
 spring:
   application:
-    name: turbine-stream-server
+    name: zipkin-server
   cloud:
     config:
       uri: http://${CONFIG_HOST:localhost}:${CONFIG_PORT:18888}

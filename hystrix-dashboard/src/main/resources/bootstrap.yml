@@ -1,8 +1,7 @@
 spring:
   application:
-    name: turbine-stream-server
+    name: hystrix-dashboard
   cloud:
     config:
       uri: http://${CONFIG_HOST:localhost}:${CONFIG_PORT:18888}
       profile: ${PROFILE:dev}
-      label: master
