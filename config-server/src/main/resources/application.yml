@@ -1,0 +1,18 @@
+server:
+  port: 18888
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          username: ${GIT_USERNAME:}
+          password: ${GIT_PASSWORD:}
+          uri: ${GIT_URL:https://gitee.com/itmuch/spring-cloud-yes.git}
+          search-paths: config-repo
+    stream:
+      kafka:
+        binder:
+          zk-nodes: ${ZK_NODES:localhost:2181}
+          brokers: ${KAFKA_BROKERS:localhost:9092}
