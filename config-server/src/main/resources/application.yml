@@ -11,7 +11,7 @@ spring:
           username: ${GIT_USERNAME:}
           password: ${GIT_PASSWORD:}
           uri: ${GIT_URL:https://gitee.com/itmuch/spring-cloud-yes.git}
-          search-paths: config-repo
+          search-paths: config-repo/**
     stream:
       kafka:
         binder:
