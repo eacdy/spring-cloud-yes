@@ -27,7 +27,6 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <docker.plugin.version>0.4.13</docker.plugin.version>
-        <spring-boot-admin.version>1.4.5</spring-boot-admin.version>
         <docker.image.prefix>reg.itmuch.com/itmuch</docker.image.prefix>
     </properties>
 
@@ -80,4 +79,27 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>com.spotify</groupId>
+                    <artifactId>docker-maven-plugin</artifactId>
+                    <version>${docker.plugin.version}</version>
+                    <configuration>
+                        <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+                        <dockerDirectory>${project.basedir}/target/docker</dockerDirectory>
+                        <resources>
+                            <resource>
+                                <targetPath>/</targetPath>
+                                <directory>${project.build.directory}</directory>
+                                <include>${project.build.finalName}.jar</include>
+                            </resource>
+                        </resources>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 </project>
