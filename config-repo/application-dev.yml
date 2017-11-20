@@ -1,0 +1,23 @@
+## 共用配置，由于所有服务都整合了rabbitmq，所以将其放在这里。
+sleuth:
+    sampler:
+      percentage: 1.0
+spring:
+  cloud:
+    stream:
+      kafka:
+        binder:
+          zk-nodes: 10.5.2.194:2181
+          brokers: 10.5.2.194:9092
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8761/eureka/
+  instance:
+    prefer-ip-address: true
+management:
+  security:
+    enabled: false
+feign:
+  hystrix:
+    enabled: true
