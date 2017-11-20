@@ -3,6 +3,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.8.RELEASE</version>
+    </parent>
+
     <groupId>com.itmuch.yes</groupId>
     <artifactId>spring-cloud-yes</artifactId>
     <version>0.0.1-SNAPSHOT</version>
@@ -17,6 +23,13 @@
         <module>zipkin-server</module>
         <module>hystrix-dashboard</module>
     </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <docker.plugin.version>0.4.13</docker.plugin.version>
+        <spring-boot-admin.version>1.4.5</spring-boot-admin.version>
+        <docker.image.prefix>reg.itmuch.com/itmuch</docker.image.prefix>
+    </properties>
 
     <repositories>
         <repository>
@@ -55,4 +68,16 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>Edgware.RC1</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>
