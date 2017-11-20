@@ -1,6 +1,7 @@
 spring:
   application:
     name: zuul-server
+    index: ${random.long}
   cloud:
     config:
       uri: http://${CONFIG_HOST:localhost}:${CONFIG_PORT:18888}

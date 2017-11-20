@@ -3,6 +3,7 @@ server:
 spring:
   application:
     name: config-server
+    index: ${random.long}
   cloud:
     config:
       server:
