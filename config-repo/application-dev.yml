@@ -7,8 +7,8 @@ spring:
     stream:
       kafka:
         binder:
-          zk-nodes: 10.5.2.194:2181
-          brokers: 10.5.2.194:9092
+          zk-nodes: localhost:2181
+          brokers: localhost:9092
 eureka:
   client:
     serviceUrl:
