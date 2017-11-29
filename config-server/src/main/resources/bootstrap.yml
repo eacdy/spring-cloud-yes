@@ -1,0 +1,3 @@
+# 对称加密的key，必须放在bootstrap中。
+encrypt:
+  key: abc@123
