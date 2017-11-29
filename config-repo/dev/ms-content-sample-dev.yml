@@ -23,7 +23,7 @@ spring:
 
 logging:
   level:
-    root: info
+    root: debug
     # org.springframework.data.elasticsearch.core.ElasticsearchTemplate: debug
     # org.springframework.data.elastic: debug
 
