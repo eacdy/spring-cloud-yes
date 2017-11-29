@@ -5,5 +5,5 @@ spring:
   cloud:
     config:
       uri: http://${CONFIG_HOST:localhost}:${CONFIG_PORT:18888}
-      name: ms-zuul
       profile: ${PROFILE:dev}
+      label: master

@@ -1,0 +1,30 @@
+server:
+  port: 8080
+  error:
+    include-exception: true
+    include-stacktrace: always
+spring:
+  freemarker:
+    # 配置该属性，用来在freemarker ftl文件中获取ctx。
+    # ref: http://blog.csdn.net/gebitan505/article/details/55047772
+    request-context-attribute: request
+  data:
+    elasticsearch:
+      cluster-name: elasticsearch
+      # 配置es节点信息，逗号分隔，如果没有指定，则启动ClientNode
+      cluster-nodes: 127.0.0.1:9300
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    joda-date-time-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    default-property-inclusion: non_null
+    serialization:
+      indent_output: true
+
+logging:
+  level:
+    root: info
+    # org.springframework.data.elasticsearch.core.ElasticsearchTemplate: debug
+    # org.springframework.data.elastic: debug
+
+

@@ -1,8 +1,12 @@
 ## 共用配置，由于所有服务都整合了rabbitmq，所以将其放在这里。
 sleuth:
     sampler:
+      # 默认是0.1，生产中强烈建议删除这一行。
       percentage: 1.0
 spring:
+  application:
+    # 必须加上这一行，否则对于一个微服务，cloud bus只会刷一个实例
+    index: ${random.long}
   cloud:
     stream:
       kafka:
@@ -18,6 +22,7 @@ eureka:
 management:
   security:
     enabled: false
+# 必须加上这部分配置，feign的Hystrix特性将无法生效
 feign:
   hystrix:
     enabled: true
