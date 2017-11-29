@@ -22,7 +22,7 @@
         <module>zuul-server</module>
         <module>zipkin-server</module>
         <module>hystrix-dashboard</module>
-        <module>provider-sample</module>
+        <module>ms-content-sample</module>
     </modules>
 
     <properties>

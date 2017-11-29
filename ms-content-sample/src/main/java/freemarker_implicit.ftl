@@ -1,0 +1,5 @@
+[#ftl]
+[#-- @implicitly included --]
+[#-- @ftlvariable name="request" type="org.springframework.web.servlet.support.RequestContext" --]
+[#-- @ftlvariable name="tag" type="com.itmuch.crawler.domain.content.Tag" --]
+[#-- @ftlvariable name="article" type="com.itmuch.crawler.domain.content.Article" --]
