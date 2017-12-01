@@ -27,13 +27,13 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @RestController
-@RequestMapping("/admin/articles")
-public class ArticleAdminController {
+@RequestMapping("/articles")
+public class ArticleController {
     private final ElasticsearchTemplate elasticsearchTemplate;
     private final ArticleRepository articleRepository;
 
     @Autowired
-    public ArticleAdminController(ElasticsearchTemplate elasticsearchTemplate, ArticleRepository articleRepository) {
+    public ArticleController(ElasticsearchTemplate elasticsearchTemplate, ArticleRepository articleRepository) {
         this.elasticsearchTemplate = elasticsearchTemplate;
         this.articleRepository = articleRepository;
     }
@@ -65,22 +65,20 @@ public class ArticleAdminController {
         String escape = keyword == null ? "aaaa" : QueryParser.escape(keyword);
 
         Criteria criteria = new Criteria("title").fuzzy(escape)
-                ;//.or(new Criteria("content").fuzzy(escape));
-        if (auditEnum != null) {
-            criteria = criteria.and(new Criteria("audit").is(auditEnum));
-        }
+                .or(new Criteria("content").fuzzy(escape))
+                .and(new Criteria("audit").is(auditEnum));
 
         CriteriaQuery criteriaQuery = new CriteriaQuery(criteria)
                 .setPageable(
-                        new PageRequest(0, 10)
+                        new PageRequest(pageVo.getPage(), pageVo.getRows(), pageVo.getSpringSort())
                 );
         Page<Article> articles = this.elasticsearchTemplate.queryForPage(criteriaQuery,
                 Article.class);
 
         HashMap<Object, Object> map = Maps.newHashMap();
         map.put("content", articles.getContent());
-        map.put("totalElements",articles.getTotalElements());
-        map.put("totalPages",articles.getTotalPages());
+        map.put("totalElements", articles.getTotalElements());
+        map.put("totalPages", articles.getTotalPages());
         return map;
     }
 

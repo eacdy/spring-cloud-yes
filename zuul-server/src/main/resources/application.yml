@@ -2,3 +2,9 @@ management:
   port: 5567
 server:
   port: 5566
+zuul:
+  routes:
+    microservice-provider-user: /user/**
+    user2:
+      url: http://localhost:8000/
+      path: /user2/**

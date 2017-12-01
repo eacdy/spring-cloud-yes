@@ -1,5 +1,7 @@
 package com.itmuch.crawler.domain.content;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.itmuch.crawler.core.convert.LongToStringJsonSerializer;
 import com.itmuch.crawler.domain.AuditEnum;
 import lombok.Builder;
 import lombok.Data;
@@ -21,7 +23,7 @@ public class Article {
      * id
      */
     @Id
-//    @JsonSerialize(using = LongToStringJsonSerializer.class)
+    @JsonSerialize(using = LongToStringJsonSerializer.class)
     private Long id;
 
     /**
@@ -29,11 +31,6 @@ public class Article {
      */
     @Field(type = FieldType.String, store = true)
     private AuditEnum audit;
-
-    /**
-     * 分类
-     */
-    private String category;
 
     /**
      * 标签
@@ -45,11 +42,6 @@ public class Article {
      * 标题
      */
     private String title;
-
-    /**
-     * hash，是url的md5值
-     */
-    private String hash;
 
     /**
      * 发布时间
@@ -65,9 +57,4 @@ public class Article {
      * 内容
      */
     private String content;
-
-    /**
-     * 点击数
-     */
-    private int click;
 }

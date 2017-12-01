@@ -23,13 +23,17 @@
         <module>zipkin-server</module>
         <module>hystrix-dashboard</module>
         <module>ms-content-sample</module>
+        <module>ms-consumer-sample</module>
+        <module>commons</module>
     </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
-        <docker.plugin.version>0.4.13</docker.plugin.version>
-        <docker.image.prefix>reg.itmuch.com/itmuch</docker.image.prefix>
+        <springfox.version>2.7.0</springfox.version>
+        <feign-form.version>3.0.3</feign-form.version>
+        <docker-plugin.version>0.4.13</docker-plugin.version>
+        <docker-image.prefix>reg.itmuch.com/itmuch</docker-image.prefix>
     </properties>
 
     <repositories>
@@ -72,6 +76,7 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- spring cloud依赖管理 -->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
@@ -79,6 +84,61 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!-- spring io platform依赖管理 -->
+            <!-- 注意：该依赖务必放在sprin个cloud依赖管理后面 -->
+            <!-- 详见：https://github.com/spring-cloud/spring-cloud-release/blob/master/docs/src/main/asciidoc/spring-cloud-starters.adoc#using-spring-cloud-dependencies-with-spring-io-platform -->
+            <dependency>
+                <groupId>io.spring.platform</groupId>
+                <artifactId>platform-bom</artifactId>
+                <version>Brussels-SR6</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- feign用于支持文件上传的依赖 -->
+            <dependency>
+                <groupId>io.github.openfeign.form</groupId>
+                <artifactId>feign-form</artifactId>
+                <version>${feign-form.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.openfeign.form</groupId>
+                <artifactId>feign-form-spring</artifactId>
+                <version>${feign-form.version}</version>
+            </dependency>
+
+            <!-- zipkin使用elasticsearch作为后端存储的依赖 -->
+            <dependency>
+                <groupId>io.zipkin.java</groupId>
+                <artifactId>zipkin-autoconfigure-storage-elasticsearch-http</artifactId>
+                <version>1.19.2</version>
+            </dependency>
+
+            <!-- swagger -->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${springfox.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${springfox.version}</version>
+            </dependency>
+
+            <!-- 工具 -->
+            <dependency>
+                <groupId>ma.glasnost.orika</groupId>
+                <artifactId>orika-core</artifactId>
+                <version>1.5.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.itmuch.yes</groupId>
+                <artifactId>commons</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -88,18 +148,7 @@
                 <plugin>
                     <groupId>com.spotify</groupId>
                     <artifactId>docker-maven-plugin</artifactId>
-                    <version>${docker.plugin.version}</version>
-                    <configuration>
-                        <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
-                        <dockerDirectory>${project.basedir}/target/docker</dockerDirectory>
-                        <resources>
-                            <resource>
-                                <targetPath>/</targetPath>
-                                <directory>${project.build.directory}</directory>
-                                <include>${project.build.finalName}.jar</include>
-                            </resource>
-                        </resources>
-                    </configuration>
+                    <version>${docker-plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
