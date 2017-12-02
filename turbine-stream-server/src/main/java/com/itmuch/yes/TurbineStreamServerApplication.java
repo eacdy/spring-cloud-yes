@@ -10,7 +10,7 @@ import org.springframework.cloud.netflix.turbine.stream.TurbineApplication;
 @EnableTurbineStream
 @EnableDiscoveryClient
 public class TurbineStreamServerApplication {
-	public static void main(String[] args) {
-		SpringApplication.run(TurbineApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(TurbineApplication.class, args);
+    }
 }

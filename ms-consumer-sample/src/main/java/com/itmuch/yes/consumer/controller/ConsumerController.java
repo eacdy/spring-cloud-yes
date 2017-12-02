@@ -1,8 +1,8 @@
 package com.itmuch.yes.consumer.controller;
 
-import com.itmuch.yes.consumer.page.PageVo;
 import com.itmuch.yes.consumer.domain.Article;
 import com.itmuch.yes.consumer.feign.ArticleFeignClient;
+import com.itmuch.yes.consumer.page.PageVo;
 import com.itmuch.yes.core.convert.AjaxResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;

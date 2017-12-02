@@ -27,6 +27,8 @@ import static org.springframework.cloud.netflix.zuul.filters.support.FilterConst
 public class RateLimitZuulFilter extends ZuulFilter {
 
     private Map<String, RateLimiter> map = Maps.newConcurrentMap();
+    @Autowired
+    private SystemPublicMetrics systemPublicMetrics;
 
     @Override
     public String filterType() {
@@ -40,9 +42,6 @@ public class RateLimitZuulFilter extends ZuulFilter {
         // 否则，RequestContext.getCurrentContext()里拿不到serviceId等数据。
         return Ordered.LOWEST_PRECEDENCE;
     }
-
-    @Autowired
-    private SystemPublicMetrics systemPublicMetrics;
 
     @Override
     public boolean shouldFilter() {

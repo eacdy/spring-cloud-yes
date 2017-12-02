@@ -1,7 +1,7 @@
 package com.itmuch.yes.repository;
 
-import com.itmuch.yes.domain.content.AuditEnum;
 import com.itmuch.yes.domain.content.Article;
+import com.itmuch.yes.domain.content.AuditEnum;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
