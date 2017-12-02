@@ -2,4 +2,4 @@
 [#-- @implicitly included --]
 [#-- @ftlvariable name="request" type="org.springframework.web.servlet.support.RequestContext" --]
 [#-- @ftlvariable name="tag" type="com.itmuch.content.domain.content.Tag" --]
-[#-- @ftlvariable name="article" type="com.itmuch.content.domain.content.Article" --]
+[#-- @ftlvariable name="article" type="com.itmuch.yes.content.domain.content.Article" --]

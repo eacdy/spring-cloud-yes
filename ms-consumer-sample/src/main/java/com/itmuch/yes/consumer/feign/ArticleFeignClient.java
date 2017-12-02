@@ -1,7 +1,7 @@
 package com.itmuch.yes.consumer.feign;
 
 import com.itmuch.yes.consumer.domain.Article;
-import com.itmuch.content.core.convert.AjaxResult;
+import com.itmuch.yes.content.core.convert.AjaxResult;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
