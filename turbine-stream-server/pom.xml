@@ -2,15 +2,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>turbine-stream-server</artifactId>
+    <packaging>jar</packaging>
+
     <parent>
         <groupId>com.itmuch.yes</groupId>
         <artifactId>spring-cloud-yes</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-
-    <name>turbine-stream-server</name>
-    <artifactId>turbine-stream-server</artifactId>
-    <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
