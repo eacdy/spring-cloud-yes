@@ -1,6 +1,6 @@
 package com.itmuch.yes.core.convert;
 
-import com.itmuch.yes.core.constants.ConstantsCode;
+import com.itmuch.yes.core.constant.ConstantsCode;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -1,7 +1,7 @@
 package com.itmuch.yes.controller;
 
 import com.google.common.collect.Maps;
-import com.itmuch.yes.core.constants.ConstantsCode;
+import com.itmuch.yes.core.constant.ConstantsCode;
 import com.itmuch.yes.core.convert.AjaxResult;
 import com.itmuch.yes.core.exception.BizRuntimeException;
 import com.itmuch.yes.core.page.PageVoWithSort;

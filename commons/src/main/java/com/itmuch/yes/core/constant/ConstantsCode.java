@@ -1,4 +1,4 @@
-package com.itmuch.yes.core.constants;
+package com.itmuch.yes.core.constant;
 
 public class ConstantsCode {
     /**
