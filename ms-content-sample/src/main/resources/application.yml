@@ -1,0 +1,16 @@
+
+keycloak:
+  auth-server-url: http://localhost:8080/auth
+  realm: realm
+  resource: demo-client
+  # ssl-required: external
+  securityConstraints:
+  - authRoles:
+    - user
+    securityCollections:
+    - name: user-haha
+      patterns:
+      - /articles
+  public-client: true
+server:
+  port: 8081

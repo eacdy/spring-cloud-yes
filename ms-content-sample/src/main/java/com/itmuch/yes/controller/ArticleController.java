@@ -11,6 +11,8 @@ import com.itmuch.yes.repository.ArticleRepository;
 import com.itmuch.yes.util.mapper.BeanMapper;
 import com.itmuch.yes.util.snowflake.IDGenerator;
 import org.apache.lucene.queryparser.classic.QueryParser;
+import org.keycloak.KeycloakPrincipal;
+import org.keycloak.representations.AccessToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,9 +22,11 @@ import org.springframework.data.elasticsearch.core.query.CriteriaQuery;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -39,10 +43,24 @@ public class ArticleController {
     }
 
     @GetMapping("")
-    public HashMap<Object, Object> search(@RequestParam(required = false) String keyword,
+    public HashMap<Object, Object> search(
+            Principal principal,
+            @RequestParam(required = false) String keyword,
                                           @RequestParam(required = false) String audit,
                                           PageVoWithSort pageVo
     ) {
+
+        if (principal instanceof KeycloakPrincipal) {
+            AccessToken accessToken = ((KeycloakPrincipal) principal).getKeycloakSecurityContext().getToken();
+            String preferredUsername = accessToken.getPreferredUsername();
+            AccessToken.Access realmAccess = accessToken.getRealmAccess();
+            Set<String> roles = realmAccess.getRoles();
+            System.out.println(roles);
+            System.out.println(preferredUsername);
+        }
+
+
+
 //        long count = this.articleRepository.count();
 //        Page<Article> page = null;
 //        if (count != 0) {

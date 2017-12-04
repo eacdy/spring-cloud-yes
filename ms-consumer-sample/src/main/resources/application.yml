@@ -1,2 +1,25 @@
 server:
   port: 8010
+
+
+keycloak:
+  auth-server-url: http://localhost:8080/auth
+  realm: realm
+  resource: consumer-client
+  # ssl-required: external
+  securityConstraints:
+  - authRoles:
+    - user
+    securityCollections:
+    - name: user-haha
+      patterns:
+      - /articles
+  public-client: true
+hystrix:
+  propagate:
+    request-attribute:
+      enabled: false
+
+
+
+

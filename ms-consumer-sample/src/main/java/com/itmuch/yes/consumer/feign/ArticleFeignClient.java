@@ -1,13 +1,14 @@
 package com.itmuch.yes.consumer.feign;
 
 import com.itmuch.yes.consumer.domain.Article;
+import com.itmuch.yes.consumer.feign.config.FeignConfiguration;
 import com.itmuch.yes.core.convert.AjaxResult;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 
-@FeignClient(name = "ms-content-sample")
+@FeignClient(name = "ms-content-sample",configuration = FeignConfiguration.class)
 public interface ArticleFeignClient {
     @GetMapping("/articles")
     HashMap<Object, Object> search(
