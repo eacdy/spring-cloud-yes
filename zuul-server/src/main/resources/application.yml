@@ -2,3 +2,19 @@ management:
   port: 5567
 server:
   port: 5566
+
+keycloak:
+  public-client: true
+  auth-server-url: http://localhost:8080/auth
+  realm: realm
+  resource: zuul-server
+  # ssl-required: external
+  securityConstraints:
+  - authRoles:
+    - user
+    securityCollections:
+    - name: user-haha
+      patterns:
+      - /ms-content-sample/articles
+zuul:
+  sensitive-headers: Cookie,Set-Cookie
