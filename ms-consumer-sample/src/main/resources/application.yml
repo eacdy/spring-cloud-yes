@@ -5,7 +5,7 @@ server:
 keycloak:
   auth-server-url: http://localhost:8080/auth
   realm: realm
-  resource: consumer-client
+  resource: ms-consumer-sample
   # ssl-required: external
   securityConstraints:
   - authRoles:
@@ -15,11 +15,3 @@ keycloak:
       patterns:
       - /articles
   public-client: true
-hystrix:
-  propagate:
-    request-attribute:
-      enabled: false
-
-
-
-

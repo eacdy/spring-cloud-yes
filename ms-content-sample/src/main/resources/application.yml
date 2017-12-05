@@ -2,7 +2,7 @@
 keycloak:
   auth-server-url: http://localhost:8080/auth
   realm: realm
-  resource: demo-client
+  resource: ms-content-sample
   # ssl-required: external
   securityConstraints:
   - authRoles:
