@@ -239,6 +239,25 @@ public HashMap<Object, Object> search(Principal principal) {
 
 
 
+### 注销
+
+注销也非常简单只需执行`HttpServletRequest.logout()` 方法即可注销。
+
+示例代码：
+
+```java
+@RestController
+public class LogoutController {
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request) throws ServletException {
+        request.logout();
+        return "退出成功";
+    }
+}
+```
+
+
+
 
 
 ## 与Spring Cloud整合
