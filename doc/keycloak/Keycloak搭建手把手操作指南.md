@@ -258,6 +258,14 @@ public class LogoutController {
 
 
 
+### 邮箱配置
+
+参考下图的配置，即可实现邮件发送。
+
+![email](images/email.png)
+
+默认的邮件模板详见 `$KEYCLOAK_PATH/themes/base/email/html` ，是用Freemarker写的。我们也可以自定义邮件模板，详见“主题定制”一节。
+
 
 
 ## 与Spring Cloud整合
@@ -480,7 +488,9 @@ Keycloak自带的届满稍微有那么一点丑陋，但Keycloak允许我们自�
 
 
 
+## TODO
 
+发送邮件
 
 
 
