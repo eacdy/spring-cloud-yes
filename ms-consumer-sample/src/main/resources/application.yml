@@ -8,9 +8,8 @@ keycloak:
   resource: ms-consumer-sample
   securityConstraints:
   - authRoles:
-    - user
+    - user-role
     securityCollections:
-    - name: user-haha
+    - name: user-role-mappings
       patterns:
       - /articles
-  public-client: true

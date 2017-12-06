@@ -11,9 +11,9 @@ keycloak:
   # ssl-required: external
   securityConstraints:
   - authRoles:
-    - user
+    - user-role
     securityCollections:
-    - name: user-haha
+    - name: user-role-mappings
       patterns:
       - /ms-content-sample/articles
       - /ms-consumer-sample/articles

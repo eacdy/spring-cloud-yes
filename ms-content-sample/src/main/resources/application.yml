@@ -1,7 +1,5 @@
 
 keycloak:
-  # 表示是一个public的client
-  public-client: true
   # keycloak的地址
   auth-server-url: http://localhost:8080/auth
   # keycloak中的realm
