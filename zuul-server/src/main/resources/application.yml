@@ -16,5 +16,4 @@ keycloak:
     - name: user-haha
       patterns:
       - /ms-content-sample/articles
-zuul:
-  sensitive-headers: Cookie,Set-Cookie
+      - /ms-consumer-sample/articles
