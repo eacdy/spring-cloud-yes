@@ -10,6 +10,7 @@ import com.itmuch.yes.domain.content.AuditEnum;
 import com.itmuch.yes.repository.ArticleRepository;
 import com.itmuch.yes.util.mapper.BeanMapper;
 import com.itmuch.yes.util.snowflake.IDGenerator;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.representations.AccessToken;
@@ -32,6 +33,7 @@ import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/articles")
+@Slf4j
 public class ArticleController {
     private final ElasticsearchTemplate elasticsearchTemplate;
     private final ArticleRepository articleRepository;
@@ -46,8 +48,8 @@ public class ArticleController {
     public HashMap<Object, Object> search(
             Principal principal,
             @RequestParam(required = false) String keyword,
-                                          @RequestParam(required = false) String audit,
-                                          PageVoWithSort pageVo
+            @RequestParam(required = false) String audit,
+            PageVoWithSort pageVo
     ) {
 
         if (principal instanceof KeycloakPrincipal) {
@@ -55,10 +57,8 @@ public class ArticleController {
             String preferredUsername = accessToken.getPreferredUsername();
             AccessToken.Access realmAccess = accessToken.getRealmAccess();
             Set<String> roles = realmAccess.getRoles();
-            System.out.println(roles);
-            System.out.println(preferredUsername);
+            log.info("当前登录用户：{}, 角色：{}", preferredUsername, roles);
         }
-
 
 
 //        long count = this.articleRepository.count();
