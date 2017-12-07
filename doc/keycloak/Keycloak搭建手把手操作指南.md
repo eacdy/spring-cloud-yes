@@ -490,9 +490,128 @@ Keycloak自带的届满稍微有那么一点丑陋，但Keycloak允许我们自�
 
 ## TODO
 
-发送邮件
+keycloak ha
+高可用
+
+权限控制，先了解下术语：<http://www.keycloak.org/docs/latest/authorization_services/index.html#_overview_terminology_resource_server>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 术语
+
+在继续之前，了解Keycloak Authorization Service引入的术语和概念非常重要。
+
+### Resource Server（资源服务器）
+
+根据OAuth2术语，resource server是托管受保护资源并能够接受和响应受保护资源请求的服务器。
+
+resource server通常依靠某种信息来决定是否允许访问受保护的资源。对于基于RESTful的resource server，该信息通常在security token中携带，通常作为bearer token，连同对服务器的每个请求一起发送。依靠会话来验证用户的Web应用程序通常将该信息存储在用户的会话中，并从那里为每个请求进行检索。
+
+在Keycloak中，任何confidential client应用都可充当resource server。此client的资源和各自的scope受到一组authorization policy的保护和管理。
+
+
+
+### Resource（资源）
+
+resource是应用和组织的资产的一部分。它可以是一组端点，一个经典的网页资源，如HTML页面等。在authorization policy术语中，资源是受保护的对象。
+
+每个resource都有唯一的标识符，可用来表示单个或一组资源。例如，您可以管理一个Banking Account Resource，该resource会为所有银行账户定义一组authorization policy。但是，您也可拥有一个名为Alice’s Banking Account的资源，这个resource代表一个客户拥有的单一resource，它也可拥有自己的一组authorization policy。
+
+
+
+
+
+### Scope
+
+resource的scope是可在resource上执行的有限的访问范围。在authorization policy术语中，scope是逻辑上可应用于resource的潜在的动词之一。
+
+它通常表示对于给定的resource，能做些什么。scope的例子是查看、编辑、删除等。但是，scope也可与资源提供的特定信息相关。在这种情况下，您可以拥有project resource和cost scope，其中cost scope用于定义用户访问项目cost的特定策略和权限。
+
+
+
+
+
+### Permission（权限）
+
+想想这个简单和非常普遍的permission：
+
+permission将受保护的对象与必须评估的policy关联起来，以确定是否授予访问权限。
+
+X CAN DO Y ON RESOURCE Z
+
+where …​
+
+X表示一个或多个用户，角色或group，或者它们的组合。也可在这里使用声明和上下文。
+
+Y表示要执行的动作，例如写入、查看等。
+
+Z表示受保护的资源，例如“/accounts”。
+
+Keycloak提供了一个丰富的平台，用于构建从简单到非常复杂、基于规则的动态权限等一系列permission strategy。它提供了灵活性，并有助于：
+
+减少代码重构和权限管理成本
+
+支持更灵活的安全模式，帮助您轻松适应安全需求的变化
+
+在运行时进行更改；应用程序只关心受保护的resource和scope，而无需关心它们如何受到保护。
+
+
+
+
+
+
+
+### Policy（策略）
+
+policy定义了授予访问对象必须满足的条件。与permission不同，您无需指定受保护的对象，而是指定访问给定对象（例如，resource、scope或两者）时必须满足的条件。policy与可用于保护资源的、不同的访问控制机制（access control mechanisms：ACM）密切相关。通过policy，您可实施基于属性的访问控制（attribute-based access control：ABAC），基于角色的访问控制（role-based access control：RBAC），基于上下文的访问控制（context-based access control）或这些的任意组合的策略。
+
+Keycloak利用policy的概念，以及如何通过提供聚合policy的概念来定义它们，您可以在其中构建“policy 中的 policy”，并仍然控制评估的行为。 Keycloak Authorization Service中的policy实施遵循分而治之的技术，而不是写出一个满足访问给定resource必须满足的所有条件的大型policy。也就是说，您可创建单独的policy，然后与不同的permission重用它们，并通过组合各个policy构建更复杂的policy。
+
+
+
+
+
+
+
+### Policy Provider（策略提供者）
+
+Policy Provider是特定policy类型的实现。Keycloak提供内置的Policy，由相应的Policy Provider支持，您可以创建自己的Policy类型来支持您的特定需求。
+
+Keycloak提供了一个SPI（Service Provider Interface：服务提供者接口），您可以使用它来插入自己的策Service Provider实现。
+
+
+
+### Permission Ticket（许可签名）
+
+Permission Ticket是由OAuth2的用户管理访问（ [OAuth2’s User-Managed Access (UMA) Profile](https://kantarainitiative.org/confluence/display/uma/UMA+1.0+Core+Protocol) ：UMA）配置文件规范定义的一种特殊类型的token，它提供了一种由authorization server确定的不透明结构。该结构表示客户请求的resource和/或scope，以及必须应用于授权数据请求（请求方令牌requesting party token：[RPT]）的policy。
+
+在UMA中，Permission Ticket对于支持人与人之间的共享以及人与组织之间的共享至关重要。为authorization workflow使用permission ticket可实现从简单到复杂的一系列场景，其中resource owner和resource server基于对这些resource访问的细粒度策略完全控制其资源。
+
+在UMA workflow中，authorization server向resource server发出permission ticket，resource server将permission ticket返回给试图访问受保护资源的client。一旦client收到ticket，它就可通过将ticket发送回authorization server来请求RPT（持有authorization数据的最后一个令牌）。
+
+有关permission ticket的更多信息，请参阅 [Authorization API](http://www.keycloak.org/docs/latest/authorization_services/index.html#_service_authorization_api) 和 [UMA](https://kantarainitiative.org/confluence/display/uma/UMA+1.0+Core+Protocol) 规范。
 
 
 
