@@ -488,32 +488,6 @@ Keycloak自带的届满稍微有那么一点丑陋，但Keycloak允许我们自�
 
 
 
-## TODO
-
-keycloak ha
-高可用
-
-权限控制，先了解下术语：<http://www.keycloak.org/docs/latest/authorization_services/index.html#_overview_terminology_resource_server>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -622,3 +596,22 @@ Permission Ticket是由OAuth2的用户管理访问（ [OAuth2’s User-Managed A
 ## 参考文档
 
 <http://slackspace.de/articles/authentication-with-spring-boot-angularjs-and-keycloak/>
+
+
+
+
+
+## TODO
+
+keycloak ha
+高可用
+
+权限控制，先了解下术语：<http://www.keycloak.org/docs/latest/authorization_services/index.html#_overview_terminology_resource_server>
+
+
+
+spring boot 的auth-role不能有通配符，这是个bug：<https://issues.jboss.org/browse/KEYCLOAK-5775>
+等该bug修复后，考虑将用例改成完全动态控制。
+大致方法是：将/* 设成 role=*，任意角色均可访问；
+然后，在keycloak中，开启授权。并配置各个路径需要什么角色/权限才能访问
+参考：<https://github.com/keycloak/keycloak-quickstarts/tree/latest/app-authz-springboot>
