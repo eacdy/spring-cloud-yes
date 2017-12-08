@@ -1,0 +1,11 @@
+keycloak:
+  auth-server-url: http://localhost:8080/auth
+  realm: realm
+  resource: ms-consumer-sample
+  securityConstraints:
+  - authRoles:
+    - user-role
+    securityCollections:
+    - name: user-role-mappings
+      patterns:
+      - /articles

@@ -1,18 +1,2 @@
-
-keycloak:
-  # keycloak的地址
-  auth-server-url: http://localhost:8080/auth
-  # keycloak中的realm
-  realm: realm
-  resource: ms-content-sample
-  securityConstraints:
-  - authRoles:
-    # 以下路径需要user-role角色才能访问
-    - user-role
-    securityCollections:
-    # name可以随便写
-    - name: user-role-mappings
-      patterns:
-      - /articles
 server:
   port: 8081
