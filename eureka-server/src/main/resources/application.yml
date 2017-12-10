@@ -21,3 +21,6 @@ eureka:
   server:
     # 开发环境关闭eureka自我保护模式
     enable-self-preservation: false
+
+
+eureka.instance.leaseRenewalIntervalInSeconds: 5
