@@ -1,3 +1,7 @@
+#management:
+#  port: 5567
+server:
+  port: 5566
 spring:
   application:
     name: zuul-server

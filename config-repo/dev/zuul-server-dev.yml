@@ -1,0 +1,14 @@
+keycloak:
+  public-client: true
+  auth-server-url: http://localhost:8080/auth
+  realm: realm
+  resource: zuul-server
+  # ssl-required: external
+  securityConstraints:
+  - authRoles:
+    - user-role
+    securityCollections:
+    - name: user-role-mappings
+      patterns:
+      - /ms-content-sample/articles
+      - /ms-consumer-sample/articles

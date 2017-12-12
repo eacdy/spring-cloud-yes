@@ -1,3 +1,10 @@
+server:
+  port: 8989
+management:
+  port: 8990
+eureka:
+  instance:
+    non-secure-port: 8989
 spring:
   application:
     name: turbine-stream-server
