@@ -25,3 +25,6 @@ nbdist/
 .nb-gradle/
 db_data
 *.log
+
+# elasticsearch
+data
