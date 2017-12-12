@@ -28,9 +28,9 @@ logging:
 
 
 keycloak:
-  # keycloak的地址
+  # keycloak地址
   auth-server-url: http://localhost:8080/auth
-  # keycloak中的realm
+  # keycloak realm
   realm: realm
   resource: ms-content-sample
   securityConstraints:

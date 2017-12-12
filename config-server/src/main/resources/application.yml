@@ -17,3 +17,6 @@ spring:
         binder:
           zk-nodes: ${ZK_NODES:localhost:2181}
           brokers: ${KAFKA_BROKERS:localhost:9092}
+management:
+  security:
+    enabled: false

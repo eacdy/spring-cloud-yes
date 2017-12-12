@@ -1,11 +1,11 @@
-## 共用配置，由于所有服务都整合了rabbitmq，所以将其放在这里。
+## 共用配置，由于所有服务都整合了Sleuth，所以将其放在这里。
 sleuth:
     sampler:
       # 默认是0.1，生产中强烈建议删除这一行。
       percentage: 1.0
 spring:
   application:
-    # 必须加上这一行，否则对于一个微服务，cloud bus只会刷一个实例
+    # 必须加上这一行，否则对于同名的微服务，做配置刷新时，spring cloud bus只会刷一个实例
     index: ${random.long}
   cloud:
     stream:
@@ -19,6 +19,8 @@ eureka:
       defaultZone: http://127.0.0.1:8761/eureka/
   instance:
     prefer-ip-address: true
+
+# 关闭spring boot actuator的安全，否则敏感路径访问是401
 management:
   security:
     enabled: false
