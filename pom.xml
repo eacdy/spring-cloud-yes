@@ -22,7 +22,8 @@
         <module>zuul-server</module>
         <module>zipkin-server</module>
         <module>hystrix-dashboard</module>
-        <module>ms-content-sample</module>
+        <module>ms-content-sample-elasticsearch</module>
+        <module>ms-content-sample-jpa</module>
         <module>ms-consumer-sample</module>
         <module>commons</module>
     </modules>

@@ -10,9 +10,9 @@ import org.springframework.web.client.RestTemplate;
 @SpringBootApplication
 @EnableElasticsearchRepositories
 @EnableCircuitBreaker
-public class ContentSampleApplication {
+public class ContentSampleJpaApplication {
     public static void main(String[] args) {
-        SpringApplication.run(ContentSampleApplication.class, args);
+        SpringApplication.run(ContentSampleJpaApplication.class, args);
     }
 
     @Bean
