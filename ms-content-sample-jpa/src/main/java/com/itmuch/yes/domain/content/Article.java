@@ -1,19 +1,15 @@
 package com.itmuch.yes.domain.content;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.itmuch.yes.core.convert.LongToStringJsonSerializer;
 import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
 
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
 
-@Document(indexName = "article_index", type = "article_type")
+@Entity
+@Table(name = "f_article")
 @Data
 @Builder
 @ToString
@@ -22,38 +18,43 @@ public class Article {
      * id
      */
     @Id
-    @JsonSerialize(using = LongToStringJsonSerializer.class)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     /**
      * 审核状态
      */
-    @Field(type = FieldType.String, store = true)
+    @Column
+    @Enumerated(EnumType.STRING)
     private AuditEnum audit;
 
     /**
      * 标签
      */
-    @Field(type = FieldType.String, store = true)
+    @Column
     private Collection<String> tags;
 
     /**
      * 标题
      */
+    @Column
     private String title;
 
     /**
      * 发布时间
      */
+    @Column
     private Date issueDate;
 
     /**
      * 摘要
      */
+    @Column
     private String summary;
 
     /**
      * 内容
      */
+    @Column
     private String content;
 }

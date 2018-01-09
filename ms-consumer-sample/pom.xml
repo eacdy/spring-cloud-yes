@@ -53,6 +53,7 @@
             <artifactId>spring-cloud-starter-stream-kafka</artifactId>
         </dependency>
 
+        <!-- Feign相关依赖，支持上传 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-feign</artifactId>
@@ -76,6 +77,12 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
+        <!-- keycloak -->
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-spring-boot-starter</artifactId>
+        </dependency>
+
         <!-- swagger -->
         <dependency>
             <groupId>io.springfox</groupId>
@@ -89,17 +96,11 @@
         <dependency>
             <groupId>com.itmuch.yes</groupId>
             <artifactId>commons</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <dependency>
-            <groupId>org.keycloak</groupId>
-            <artifactId>keycloak-spring-boot-starter</artifactId>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
 
         <dependency>

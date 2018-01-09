@@ -78,7 +78,15 @@ public class RequestAttributeHystrixConcurrencyStrategy extends HystrixConcurren
 	@Override
 	public <T> Callable<T> wrapCallable(Callable<T> callable) {
 		RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-		return new WrappedCallable<>(callable, requestAttributes);
+
+		if(callable instanceof HystrixRequestAttributeWrappedCallable){
+			return callable;
+		}
+		Callable<T> wrappedCallable = this.delegate.wrapCallable(callable);
+		if(wrappedCallable instanceof HystrixRequestAttributeWrappedCallable){
+			return wrappedCallable;
+		}
+		return new HystrixRequestAttributeWrappedCallable<>(wrappedCallable, requestAttributes);
 	}
 
 	@Override
@@ -108,12 +116,12 @@ public class RequestAttributeHystrixConcurrencyStrategy extends HystrixConcurren
 		return this.delegate.getRequestVariable(rv);
 	}
 
-	static class WrappedCallable<T> implements Callable<T> {
+	static class HystrixRequestAttributeWrappedCallable<T> implements Callable<T> {
 
 		private final Callable<T> target;
 		private final RequestAttributes requestAttributes;
 
-		public WrappedCallable(Callable<T> target, RequestAttributes requestAttributes) {
+		public HystrixRequestAttributeWrappedCallable(Callable<T> target, RequestAttributes requestAttributes) {
 			this.target = target;
 			this.requestAttributes = requestAttributes;
 		}

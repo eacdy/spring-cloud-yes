@@ -6,5 +6,6 @@ spring:
     index: ${random.long}
   cloud:
     config:
+      name: ms-content-sample-elasticsearch
       uri: http://${CONFIG_HOST:localhost}:${CONFIG_PORT:18888}
       profile: ${PROFILE:dev}

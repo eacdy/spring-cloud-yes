@@ -11,15 +11,12 @@ import com.itmuch.yes.repository.ArticleRepository;
 import com.itmuch.yes.util.mapper.BeanMapper;
 import com.itmuch.yes.util.snowflake.IDGenerator;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.lucene.queryparser.classic.QueryParser;
+import org.hibernate.Criteria;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.representations.AccessToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
-import org.springframework.data.elasticsearch.core.query.Criteria;
-import org.springframework.data.elasticsearch.core.query.CriteriaQuery;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,12 +32,10 @@ import java.util.stream.Stream;
 @RequestMapping("/articles")
 @Slf4j
 public class ArticleController {
-    private final ElasticsearchTemplate elasticsearchTemplate;
     private final ArticleRepository articleRepository;
 
     @Autowired
-    public ArticleController(ElasticsearchTemplate elasticsearchTemplate, ArticleRepository articleRepository) {
-        this.elasticsearchTemplate = elasticsearchTemplate;
+    public ArticleController(ArticleRepository articleRepository) {
         this.articleRepository = articleRepository;
     }
 
