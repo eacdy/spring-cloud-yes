@@ -1,5 +1,5 @@
 server:
-  port: 9411
+  port: 9488
 spring:
   application:
     name: zipkin-server
@@ -13,9 +13,9 @@ zipkin:
       # ZooKeeper host string, comma-separated host:port value.
       bootstrap-servers: localhost:9092
       # Name of topic to poll for spans
-      topic: zipkin
+      topic: zipkin-topic
       # Consumer group this process is consuming on behalf of.
-      group-id: zipkin
+      group-id: zipkin-group
       # Count of consumer threads consuming the topic
       streams: 1
       # Maximum size of a message containing spans in bytes
