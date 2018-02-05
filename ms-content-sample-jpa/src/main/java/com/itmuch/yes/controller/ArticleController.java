@@ -135,26 +135,5 @@ public class ArticleController {
         return new AjaxResult().success();
     }
 
-    /**
-     * 审核/拒绝审核
-     *
-     * @param audit 审核状态
-     * @param ids   要审核的文章id
-     * @return 操作结果
-     */
-    @PatchMapping("/{audit:passed|failed}")
-    public AjaxResult audit(@PathVariable String audit, @RequestBody Long[] ids) {
-        if (ids == null || ids.length == 0) {
-            throw new BizRuntimeException(
-                    ConstantsCode.DATA_NOT_FOUND,
-                    "至少勾选1条",
-                    "至少勾选1条");
-        }
-        Stream<Article> allByIdIn = this.articleRepository.findAllByIdIn(ids);
-        List<Article> collect = allByIdIn
-                .peek(t -> t.setAudit(AuditEnum.valueOf(audit.toUpperCase())))
-                .collect(Collectors.toList());
-        this.articleRepository.save(collect);
-        return new AjaxResult().success();
-    }
+
 }

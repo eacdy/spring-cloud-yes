@@ -1,52 +1,47 @@
 package com.itmuch.yes.controller;
 
-import com.google.common.collect.Maps;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.itmuch.yes.PageVoWithSort4Mybatis;
 import com.itmuch.yes.core.constant.ConstantsCode;
 import com.itmuch.yes.core.convert.AjaxResult;
 import com.itmuch.yes.core.exception.BizRuntimeException;
-import com.itmuch.yes.core.page.PageVoWithSort;
 import com.itmuch.yes.domain.content.Article;
-import com.itmuch.yes.repository.ArticleRepository;
+import com.itmuch.yes.repository.content.ArticleMapper;
 import com.itmuch.yes.util.mapper.BeanMapper;
 import com.itmuch.yes.util.snowflake.IDGenerator;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.lucene.queryparser.classic.QueryParser;
+import org.apache.commons.lang3.StringUtils;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.representations.AccessToken;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
-import org.springframework.data.elasticsearch.core.query.Criteria;
-import org.springframework.data.elasticsearch.core.query.CriteriaQuery;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Set;
 
 @RestController
 @RequestMapping("/articles")
 @Slf4j
 public class ArticleController {
-    private final ElasticsearchTemplate elasticsearchTemplate;
-    private final ArticleRepository articleRepository;
-
     @Autowired
-    public ArticleController(ElasticsearchTemplate elasticsearchTemplate, ArticleRepository articleRepository) {
-        this.elasticsearchTemplate = elasticsearchTemplate;
-        this.articleRepository = articleRepository;
+    private ArticleMapper articleMapper;
+
+    @GetMapping("/{id}")
+    public AjaxResult<Article> selectById(@PathVariable Long id) {
+        return new AjaxResult<Article>().success(
+                this.articleMapper.selectByPrimaryKey(id)
+        );
     }
 
     @GetMapping("")
-    public HashMap<Object, Object> search(
+    public PageInfo<Article> search(
             Principal principal,
             @RequestParam(required = false) String keyword,
-            PageVoWithSort pageVo
+            PageVoWithSort4Mybatis pageVo
     ) {
-
         if (principal instanceof KeycloakPrincipal) {
             AccessToken accessToken = ((KeycloakPrincipal) principal).getKeycloakSecurityContext().getToken();
             String preferredUsername = accessToken.getPreferredUsername();
@@ -55,23 +50,17 @@ public class ArticleController {
             log.info("当前登录用户：{}, 角色：{}", preferredUsername, roles);
         }
 
-        String escape = keyword == null ? "" : QueryParser.escape(keyword);
+        PageHelper.startPage(pageVo.getPage(), pageVo.getRows(), pageVo.getSort());
 
-        Criteria criteria = new Criteria("title").fuzzy(escape)
-                .or(new Criteria("content").fuzzy(escape));
+        if(StringUtils.isEmpty(keyword)){
+            return new PageInfo<>(
+                    this.articleMapper.selectAll()
+            );
+        }
 
-        CriteriaQuery criteriaQuery = new CriteriaQuery(criteria)
-                .setPageable(
-                        new PageRequest(pageVo.getPage(), pageVo.getRows(), pageVo.getSpringSort())
-                );
-        Page<Article> articles = this.elasticsearchTemplate.queryForPage(criteriaQuery,
-                Article.class);
-
-        HashMap<Object, Object> map = Maps.newHashMap();
-        map.put("content", articles.getContent());
-        map.put("totalElements", articles.getTotalElements());
-        map.put("totalPages", articles.getTotalPages());
-        return map;
+        return new PageInfo<>(
+                this.articleMapper.searchByCondition(keyword)
+        );
     }
 
     /**
@@ -82,10 +71,9 @@ public class ArticleController {
      */
     @PostMapping("")
     public AjaxResult add(@RequestBody @Validated Article article) {
-        article.setId(IDGenerator.genId());
         article.setIssueDate(new Date());
 
-        this.articleRepository.save(article);
+        this.articleMapper.insertSelective(article);
         return new AjaxResult().success();
     }
 
@@ -97,7 +85,7 @@ public class ArticleController {
      */
     @PutMapping("")
     public AjaxResult edit(@RequestBody @Validated Article article) {
-        Article articleInDB = this.articleRepository.findOne(article.getId());
+        Article articleInDB = this.articleMapper.selectByPrimaryKey(article.getId());
         if (articleInDB == null) {
             throw new BizRuntimeException(
                     ConstantsCode.DATA_NOT_FOUND,
@@ -105,8 +93,10 @@ public class ArticleController {
                     "该文章不存在");
         }
 
+        // 目前只要经过人工编辑，就自动审核。防止这边在编辑，那边采集又覆盖掉。
         BeanMapper.map(article, articleInDB);
-        this.articleRepository.save(articleInDB);
+        this.articleMapper.updateByPrimaryKeyWithBLOBs(articleInDB);
         return new AjaxResult().success();
     }
+
 }

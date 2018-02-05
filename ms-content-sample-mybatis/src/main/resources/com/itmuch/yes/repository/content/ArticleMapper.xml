@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itmuch.yes.repository.content.ArticleMapper">
+    <resultMap id="BaseResultMap" type="com.itmuch.yes.domain.content.Article">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="summary" jdbcType="VARCHAR" property="summary"/>
+        <result column="issue_date" jdbcType="TIMESTAMP" property="issueDate"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itmuch.yes.domain.content.Article">
+        <result column="content" jdbcType="LONGVARCHAR" property="content"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, title, summary, issue_date
+    </sql>
+    <sql id="Blob_Column_List">
+        content
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from f_article
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM f_article
+        WHERE id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.itmuch.yes.domain.content.Article">
+        INSERT INTO f_article (id, title, summary,
+                               issue_date, content)
+        VALUES (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR},
+                #{issueDate,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.itmuch.yes.domain.content.Article">
+        insert into f_article
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="summary != null">
+                summary,
+            </if>
+            <if test="issueDate != null">
+                issue_date,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="summary != null">
+                #{summary,jdbcType=VARCHAR},
+            </if>
+            <if test="issueDate != null">
+                #{issueDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.itmuch.yes.domain.content.Article">
+        update f_article
+        <set>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="summary != null">
+                summary = #{summary,jdbcType=VARCHAR},
+            </if>
+            <if test="issueDate != null">
+                issue_date = #{issueDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itmuch.yes.domain.content.Article">
+        UPDATE f_article
+        SET title      = #{title,jdbcType=VARCHAR},
+            summary    = #{summary,jdbcType=VARCHAR},
+            issue_date = #{issueDate,jdbcType=TIMESTAMP},
+            content    = #{content,jdbcType=LONGVARCHAR}
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.itmuch.yes.domain.content.Article">
+        UPDATE f_article
+        SET title      = #{title,jdbcType=VARCHAR},
+            summary    = #{summary,jdbcType=VARCHAR},
+            issue_date = #{issueDate,jdbcType=TIMESTAMP}
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="selectAll" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from f_article
+    </select>
+
+    <select id="searchByCondition" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from f_article
+        where title like CONCAT('%', #{keyword}, '%') or content like CONCAT('%', #{keyword}, '%')
+    </select>
+</mapper>

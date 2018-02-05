@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<!-- 该配置文件说明插件需要如何生成，以及生成对应的包名，路径等信息。
+      还有重要的就是我们要生成的实体类所对应的的表或者试图 -->
+<generatorConfiguration>
+    <properties resource="mybatis_generator.properties"/>
+    <context id="MBG" targetRuntime="MyBatis3" defaultModelType="conditional">
+        <plugin type="com.softwareloop.mybatis.generator.plugins.LombokPlugin">
+            <!-- enable annotations -->
+            <property name="builder" value="true"/>
+            <property name="allArgsConstructor" value="false"/>
+        </plugin>
+
+        <commentGenerator>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true"/>
+            <!-- 不希望生成的注释中包含时间戳 -->
+            <property name="suppressDate" value="true"/>
+            <!-- 是否  自动为每一个生成的类创建一个构造方法-->
+            <property name="constructorBased" value="false"/>
+        </commentGenerator>
+        <!-- 数据库连接 -->
+        <jdbcConnection
+                driverClass="${jdbc.driverClassName}"
+                connectionURL="${jdbc.url}"
+                userId="${jdbc.username}"
+                password="${jdbc.password}">
+        </jdbcConnection>
+        <!-- 指定生成的类型为java类型，避免数据库中number等类型字段 -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+        <!-- 生成model模型，对应的包，存放位置可以指定具体的路径,如/ProjectName/src，也可以使用MAVEN来自动生成 -->
+        <javaModelGenerator targetPackage="${modelPackage}" targetProject="src/main/java">
+            <!-- 在targetPackage的基础上，根据数据库的schema再生成一层package，最终生成的类放在这个package下，默认为false -->
+            <property name="enableSubPackages" value="true"/>
+            <!-- 设置是否在getter方法中，对String类型字段调用trim()方法 -->
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!--对应的xml mapper文件  -->
+        <sqlMapGenerator targetPackage="${mapperPackage}" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!-- 对应的dao接口 -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="${mapperPackage}" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!-- 表名对应生成的实体 -->
+        <table tableName="${table.name}" domainObjectName="${domain.object.name}"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <!-- 忽略列，不生成bean 字段 -->
+            <!--<ignoreColumn column="create_by"/>-->
+        </table>
+    </context>
+</generatorConfiguration>
