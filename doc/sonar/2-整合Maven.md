@@ -63,4 +63,3 @@
       -Dsonar.host.url=http://localhost:9000 \
       -Dsonar.login=62b615f477557f98bc60b396c2b4ca2793afbdea
   ```
-
