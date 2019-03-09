@@ -23,7 +23,7 @@
 * 到Maven项目的根目录执行如下命令，即可使用SonarQube分析项目：
 
   ```shell
-  mvn sonar:sonar
+  mvn sonar:sonar -Dsonar.java.binaries=target/sonar
   ```
   等待片刻后，项目构建成功：
 
@@ -61,5 +61,6 @@
   ```shell
   mvn sonar:sonar \
       -Dsonar.host.url=http://localhost:9000 \
-      -Dsonar.login=62b615f477557f98bc60b396c2b4ca2793afbdea
+      -Dsonar.login=62b615f477557f98bc60b396c2b4ca2793afbdea \
+      -Dsonar.java.binaries=target/sonar
   ```
