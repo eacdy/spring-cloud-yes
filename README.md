@@ -29,10 +29,9 @@
 | 项目                             | 端口                                   |
 | -------------------------------- | -------------------------------------- |
 | config-server                    | 18888                                  |
-| eureka-server                    | 8761                                   |
+| consul                           | 8500                                   |
 | hystrix-dashboard                | 7979                                   |
-| turbine-stream-server            | 8989（服务端口）、8990（actuator端口） |
-| zipkin-server                    | 9588                                   |
+| turbine-server                   | 8989                                   |
 | zuul-server                      | 5566（服务端口）、5567（actuator端口） |
 | ms-content-sample（服务提供者）  | 8081                                   |
 | ms-consumer-sample（服务消费者） | 8010                                   |
@@ -41,7 +40,7 @@
 
 ## 项目初始化
 
-详见：[初始化文档](doc/1.初始化文档.md) ，包含：
+详见：[初始化文档](doc/1.初始化文档.md) ，包含：如何初始化项目
 
 
 
@@ -71,7 +70,8 @@
    1. 有scope的
    2. 没有scope的
 2. Docker Compose快速部署手把手教程 & 编排
-3. Kubernetes快速部署手把手教程 & 编排
+3. Consul安装、部署管理说明
+4. Kubernetes快速部署手把手教程 & 编排
 
 
 
