@@ -35,7 +35,7 @@ public class KeycloakRouteZuulFilter extends ZuulFilter {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
         Principal principal = request.getUserPrincipal();
-        return principal != null && principal instanceof KeycloakPrincipal;
+        return principal instanceof KeycloakPrincipal;
     }
 
     @Override

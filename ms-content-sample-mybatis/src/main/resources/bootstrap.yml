@@ -3,12 +3,18 @@ server:
 spring:
   application:
     name: ms-content-sample
-    index: ${random.long}
   cloud:
-    config:
-      name: ms-content-sample-mybatis
-      uri: http://${CONFIG_HOST:localhost}:${CONFIG_PORT:18888}
-      profile: ${PROFILE:dev}
+    consul:
+      config:
+        # 启用consul config
+        enabled: true
+        # 配置文件的前缀文件夹名
+        prefix: configuration
+        format: files
+      host: ${CONSUL_HOST:127.0.0.1}
+      port: ${CONSUL_PORT:8500}
+  profiles:
+    active: ${PROFILE:dev}
 
 
 logging:
