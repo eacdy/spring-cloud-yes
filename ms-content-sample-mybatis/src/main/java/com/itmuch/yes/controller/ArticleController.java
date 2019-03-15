@@ -9,7 +9,7 @@ import com.itmuch.yes.core.exception.BizRuntimeException;
 import com.itmuch.yes.domain.content.Article;
 import com.itmuch.yes.repository.content.ArticleMapper;
 import com.itmuch.yes.util.mapper.BeanMapper;
-import com.itmuch.yes.util.snowflake.IDGenerator;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.keycloak.KeycloakPrincipal;
@@ -22,12 +22,15 @@ import java.security.Principal;
 import java.util.Date;
 import java.util.Set;
 
+/**
+ * @author itmuch.com
+ */
 @RestController
 @RequestMapping("/articles")
 @Slf4j
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ArticleController {
-    @Autowired
-    private ArticleMapper articleMapper;
+    private final ArticleMapper articleMapper;
 
     @GetMapping("/{id}")
     public AjaxResult<Article> selectById(@PathVariable Long id) {
@@ -52,7 +55,7 @@ public class ArticleController {
 
         PageHelper.startPage(pageVo.getPage(), pageVo.getRows(), pageVo.getSort());
 
-        if(StringUtils.isEmpty(keyword)){
+        if (StringUtils.isEmpty(keyword)) {
             return new PageInfo<>(
                     this.articleMapper.selectAll()
             );

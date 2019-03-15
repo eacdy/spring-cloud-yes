@@ -12,8 +12,8 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnProperty(value = "hystrix.propagate.request-attribute.enabled", matchIfMissing = true)
 @EnableConfigurationProperties(HystrixRequestAttributeProperties.class)
 public class HystrixRequestAttributeConfiguration {
-	@Bean
-	public RequestAttributeHystrixConcurrencyStrategy hystrixRequestAutoConfiguration() {
-		return new RequestAttributeHystrixConcurrencyStrategy();
-	}
+    @Bean
+    public RequestAttributeHystrixConcurrencyStrategy hystrixRequestAutoConfiguration() {
+        return new RequestAttributeHystrixConcurrencyStrategy();
+    }
 }

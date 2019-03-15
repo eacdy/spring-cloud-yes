@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 
-@FeignClient(name = "ms-content-sample",configuration = FeignConfiguration.class)
+@FeignClient(name = "ms-content-sample", configuration = FeignConfiguration.class)
 public interface ArticleFeignClient {
     @GetMapping("/articles")
     HashMap<Object, Object> search(

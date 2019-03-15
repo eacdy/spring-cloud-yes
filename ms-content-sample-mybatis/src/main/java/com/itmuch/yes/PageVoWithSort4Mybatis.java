@@ -6,7 +6,7 @@ import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class PageVoWithSort4Mybatis extends PageVo{
+public class PageVoWithSort4Mybatis extends PageVo {
     /**
      * 排序字段
      */

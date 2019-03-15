@@ -25,7 +25,8 @@
         where id = #{id,jdbcType=BIGINT}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-        DELETE FROM f_article
+        DELETE
+        FROM f_article
         WHERE id = #{id,jdbcType=BIGINT}
     </delete>
     <insert id="insert" parameterType="com.itmuch.yes.domain.content.Article">
