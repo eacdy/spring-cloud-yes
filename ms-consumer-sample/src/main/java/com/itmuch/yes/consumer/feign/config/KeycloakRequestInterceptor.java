@@ -17,14 +17,15 @@ public class KeycloakRequestInterceptor implements RequestInterceptor {
     @Override
     public void apply(RequestTemplate template) {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        assert attributes != null;
         Principal principal = attributes.getRequest().getUserPrincipal();
 
-        if (principal != null && principal instanceof KeycloakPrincipal) {
+        if (principal instanceof KeycloakPrincipal) {
             KeycloakSecurityContext keycloakSecurityContext = ((KeycloakPrincipal) principal)
                     .getKeycloakSecurityContext();
 
             if (keycloakSecurityContext instanceof RefreshableKeycloakSecurityContext) {
-                RefreshableKeycloakSecurityContext.class.cast(keycloakSecurityContext)
+                ((RefreshableKeycloakSecurityContext) keycloakSecurityContext)
                         .refreshExpiredToken(true);
                 template.header(AUTHORIZATION_HEADER, "Bearer " + keycloakSecurityContext.getTokenString());
             }
