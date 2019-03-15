@@ -1,0 +1,17 @@
+# 参考：https://docs.docker.com/samples/library/mysql/#-via-docker-stack-deploy-or-docker-compose
+version: '3.1'
+services:
+  mysql:
+    image: mysql:8.0
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - ./init-sql/:/docker-entrypoint-initdb.d/
+      - ./db-data:/var/lib/mysql
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: ms-content
+      MYSQL_USER: mscontent
+      MYSQL_PASSWORD: mscontent

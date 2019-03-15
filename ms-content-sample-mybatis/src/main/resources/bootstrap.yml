@@ -6,6 +6,7 @@ spring:
   cloud:
     consul:
       config:
+        name: ms-content-sample-mybatis
         # 启用consul config
         enabled: true
         # 配置文件的前缀文件夹名

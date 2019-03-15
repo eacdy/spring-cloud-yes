@@ -28,3 +28,7 @@ db_data
 
 # elasticsearch
 data
+
+# docker mysql 
+init-sql
+db-data

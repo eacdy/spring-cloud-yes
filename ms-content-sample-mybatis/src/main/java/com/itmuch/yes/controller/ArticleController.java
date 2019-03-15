@@ -98,7 +98,7 @@ public class ArticleController {
 
         // 目前只要经过人工编辑，就自动审核。防止这边在编辑，那边采集又覆盖掉。
         BeanMapper.map(article, articleInDB);
-        this.articleMapper.updateByPrimaryKeyWithBLOBs(articleInDB);
+        this.articleMapper.updateByPrimaryKey(articleInDB);
         return new AjaxResult().success();
     }
 

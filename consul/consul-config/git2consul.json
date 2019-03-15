@@ -1,0 +1,19 @@
+{
+  "version": "1.0",
+  "repos": [
+    {
+      "name": "configuration",
+      "url": "https://gitee.com/itmuch/spring-cloud-yes-config-repo.git",
+      "branches": [
+        "master"
+      ],
+      "include_branch_name": false,
+      "hooks": [
+        {
+          "type": "polling",
+          "interval": "1"
+        }
+      ]
+    }
+  ]
+}
