@@ -14,6 +14,8 @@ import java.security.Principal;
 /**
  * keycloak传播header的filter。
  * 参考：https://github.com/Activiti/activiti-cloud-gateway/blob/master/src/main/java/org/activiti/cloud/gateway/KeycloakFilterRoute.java
+ *
+ * @author itmuch.com
  */
 @Component
 public class KeycloakRouteZuulFilter extends ZuulFilter {

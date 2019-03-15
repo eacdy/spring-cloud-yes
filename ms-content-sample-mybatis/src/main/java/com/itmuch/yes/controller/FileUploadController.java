@@ -10,7 +10,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
+/**
+ * @author itmuch.com
+ */
 @Controller
 public class FileUploadController {
     /**
@@ -27,7 +31,9 @@ public class FileUploadController {
     public @ResponseBody
     String handleFileUpload(@RequestPart(value = "file") MultipartFile file) throws IOException {
         byte[] bytes = file.getBytes();
-        File fileToSave = new File(file.getOriginalFilename());
+        File fileToSave = new File(
+                Objects.requireNonNull(file.getOriginalFilename())
+        );
         FileCopyUtils.copy(bytes, fileToSave);
         return fileToSave.getAbsolutePath();
     }

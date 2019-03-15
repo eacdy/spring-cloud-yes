@@ -111,40 +111,26 @@
             <plugin>
                 <groupId>org.mybatis.generator</groupId>
                 <artifactId>mybatis-generator-maven-plugin</artifactId>
-                <version>1.3.5</version>
-                <!-- 数据库驱动  -->
+                <version>1.3.6</version>
+                <configuration>
+                    <configurationFile>
+                        ${basedir}/src/main/resources/generator/generatorConfig.xml
+                    </configurationFile>
+                    <overwrite>true</overwrite>
+                    <verbose>true</verbose>
+                </configuration>
                 <dependencies>
                     <dependency>
                         <groupId>mysql</groupId>
                         <artifactId>mysql-connector-java</artifactId>
-                        <version>5.1.44</version>
+                        <version>5.1.29</version>
                     </dependency>
                     <dependency>
-                        <groupId>com.softwareloop</groupId>
-                        <artifactId>mybatis-generator-lombok-plugin</artifactId>
-                        <version>1.1</version>
-                        <scope>system</scope>
-                        <systemPath>${basedir}/src/main/resources/mybatis-generator-lombok-plugin-1.1-SNAPSHOT.jar
-                        </systemPath>
+                        <groupId>tk.mybatis</groupId>
+                        <artifactId>mapper</artifactId>
+                        <version>4.0.0</version>
                     </dependency>
                 </dependencies>
-                <!-- 自动生成 -->
-                <executions>
-                    <execution>
-                        <id>Generate MyBatis Artifacts</id>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <configuration>
-                            <!-- 指定文件位置好像不起作用，始终默认读取src/main/resources/generatorConfig.xml文件 -->
-                            <configurationFile>src/main/resources/generatorConfig.xml</configurationFile>
-                            <!--允许移动生成的文件-->
-                            <verbose>true</verbose>
-                            <!--允许覆盖生成的文件-->
-                            <overwrite>true</overwrite>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>

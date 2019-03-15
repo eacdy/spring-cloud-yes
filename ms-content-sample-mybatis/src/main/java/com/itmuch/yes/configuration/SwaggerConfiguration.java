@@ -17,6 +17,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.List;
 
+/**
+ * @author itmuch.com
+ */
 @Configuration
 @EnableSwagger2
 public class SwaggerConfiguration {
@@ -43,7 +46,8 @@ public class SwaggerConfiguration {
                 //参数名
                 .name("Token")
                 .description("请输入您的JWT Token")
-                .modelRef(new ModelRef("string"))//指定参数值的类型
+                //指定参数值的类型
+                .modelRef(new ModelRef("string"))
                 .required(false)
                 .build();
         List<Parameter> parameters = Lists.newArrayList(parameter);

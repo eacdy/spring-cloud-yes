@@ -5,22 +5,18 @@
 <!-- 该配置文件说明插件需要如何生成，以及生成对应的包名，路径等信息。
       还有重要的就是我们要生成的实体类所对应的的表或者试图 -->
 <generatorConfiguration>
-    <properties resource="mybatis_generator.properties"/>
-    <context id="MBG" targetRuntime="MyBatis3" defaultModelType="conditional">
-        <plugin type="com.softwareloop.mybatis.generator.plugins.LombokPlugin">
-            <!-- enable annotations -->
-            <property name="builder" value="true"/>
-            <property name="allArgsConstructor" value="false"/>
+    <properties resource="generator/mybatis_generator.properties"/>
+
+    <context id="Mysql" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+        <property name="lombok" value="Getter,Setter,ToString,Accessors"/>
+
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <property name="mappers" value="tk.mybatis.mapper.common.Mapper"/>
+            <property name="caseSensitive" value="true"/>
         </plugin>
 
-        <commentGenerator>
-            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
-            <property name="suppressAllComments" value="true"/>
-            <!-- 不希望生成的注释中包含时间戳 -->
-            <property name="suppressDate" value="true"/>
-            <!-- 是否  自动为每一个生成的类创建一个构造方法-->
-            <property name="constructorBased" value="false"/>
-        </commentGenerator>
         <!-- 数据库连接 -->
         <jdbcConnection
                 driverClass="${jdbc.driverClassName}"
