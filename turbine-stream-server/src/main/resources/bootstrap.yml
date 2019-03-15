@@ -15,3 +15,10 @@ spring:
       port: ${CONSUL_PORT:8500}
   profiles:
     active: ${PROFILE:dev}
+
+applications: zuul-server,ms-consumer-sample
+
+turbine:
+  aggregator:
+    clusterConfig: ${applications}
+  appConfig: ${applications}
