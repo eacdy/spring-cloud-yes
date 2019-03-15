@@ -15,3 +15,6 @@ spring:
       port: ${CONSUL_PORT:8500}
   profiles:
     active: ${PROFILE:dev}
+
+zuul:
+  sensitive-headers: Cookie,Set-Cookie
