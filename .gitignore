@@ -29,6 +29,7 @@ db_data
 # elasticsearch
 data
 
-# docker mysql 
-init-sql
-db-data
+# docker mysql
+db-data/
+jenkins/
+sonarqube/

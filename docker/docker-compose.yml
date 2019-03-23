@@ -1,12 +1,13 @@
-# 参考：https://docs.docker.com/samples/library/mysql/#-via-docker-stack-deploy-or-docker-compose
 version: '3.1'
 services:
+  # ref：https://hub.docker.com/_/mysql
+  # ref：https://docs.docker.com/samples/library/mysql/#-via-docker-stack-deploy-or-docker-compose
   mysql:
     image: mysql:8.0
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     volumes:
-      - ./init-sql/:/docker-entrypoint-initdb.d/
-      - ./db-data:/var/lib/mysql
+      - ./mysql/init-sql/:/docker-entrypoint-initdb.d/
+      - ./mysql/db-data/:/var/lib/mysql/
     restart: always
     ports:
       - "3306:3306"
@@ -15,3 +16,39 @@ services:
       MYSQL_DATABASE: ms-content
       MYSQL_USER: mscontent
       MYSQL_PASSWORD: mscontent
+  # ref：https://hub.docker.com/r/jboss/keycloak
+  keycloak:
+    image: jboss/keycloak:5.0.0
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      # 强制用h2
+      DB_VENDOR: h2
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+  # ref：https://hub.docker.com/_/consul
+  # ref：https://www.consul.io/docs/guides/consul-containers.html
+  consul:
+    image: consul
+    restart: always
+    ports:
+      - "8500:8500"
+  # ref：https://hub.docker.com/r/jenkins/jenkins
+  jenkins:
+    image: jenkins/jenkins:lts
+    ports:
+      - "18080:8080"
+      - "50000:50000"
+    volumes:
+      - ./jenkins/:/var/jenkins_home
+  # ref：https://hub.docker.com/_/sonarqube
+  sonarqube:
+    image: sonarqube:7.7-community
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./sonarqube/conf:/opt/sonarqube/conf
+      - ./sonarqube/data:/opt/sonarqube/data
+      - ./sonarqube/logs:/opt/sonarqube/logs
+      - ./sonarqube/extensions:/opt/sonarqube/extensions
