@@ -7,7 +7,6 @@
 | ------------ | -------------- |
 | Spring Cloud | 你懂的         |
 | Keycloak     | 微服务认证授权 |
-| Kafka        | 基于消息的通信 |
 | Jenkins      | 持续集成       |
 | SonarQube    | 代码质量控制   |
 

@@ -18,3 +18,7 @@ spring:
 
 zuul:
   sensitive-headers: Cookie,Set-Cookie
+
+management:
+  server:
+    port: 5567
