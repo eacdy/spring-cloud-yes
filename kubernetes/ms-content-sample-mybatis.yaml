@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-content-sample-mybatis
+  labels:
+    app: ms-content-sample-mybatis
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: ms-content-sample-mybatis
+      labels:
+        app: ms-content-sample-mybatis
+    spec:
+      containers:
+        - name: ms-content-sample-mybatis
+          image: reg.itmuch.com/itmuch/ms-content-sample-mybatis
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: PROFILE
+              value: "k8s"
+            - name: CONSUL_HOST
+              value: "consul"
+            - name: CONSUL_PORT
+              value: "8500"
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: ms-content-sample-mybatis

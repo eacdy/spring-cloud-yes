@@ -1,0 +1,62 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+spec:
+  selector:
+    app: mysql
+  ports:
+    - port: 3306
+      targetPort: 3306
+      nodePort: 30006
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+  labels:
+    app: mysql
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: mysql
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:8.0
+          imagePullPolicy: IfNotPresent
+          args:
+            - "--character-set-server=utf8mb4"
+            - "--collation-server=utf8mb4_unicode_ci"
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: root123
+            - name: MYSQL_DATABASE
+              value: ms-content
+            - name: MYSQL_USER
+              value: mscontent
+            - name: MYSQL_PASSWORD
+              value: mscontent
+          volumeMounts:
+            - mountPath: /docker-entrypoint-initdb.d/
+              name: mysql-init
+            - mountPath: /var/lib/mysql/
+              name: mysql-data
+      restartPolicy: Always
+      volumes:
+        - name: mysql-init
+          hostPath:
+            # 该路径看自己机器的路径进行修改。
+            path: /Users/reno/develop/code_mine/spring-cloud-yes/kubernetes/config/init-sql
+        - name: mysql-data
+          hostPath:
+            path: /Users/reno/develop/code_mine/spring-cloud-yes/kubernetes/data/mysql-data
+  selector:
+    matchLabels:
+      app: mysql
+
+# ref：https://hub.docker.com/_/mysql

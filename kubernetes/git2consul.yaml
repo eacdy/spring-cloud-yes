@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: git2consul
+  labels:
+    app: git2consul
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: git2consul
+      labels:
+        app: git2consul
+    spec:
+      containers:
+        - name: git2consul
+          image: cimpress/git2consul
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - mountPath: /etc/git2consul.d/
+              name: git2consul-config
+          # 如果不想用args指定一堆参数，也可将args全部注释掉，并释放command这一行
+          # command: [ "/usr/bin/node","/usr/lib/node_modules/git2consul", "--config-file","/etc/git2consul.d/git2consul.json","--endpoint","consul.default.svc.cluster.local","--port","8500"]
+          args:
+            - "--config-file"
+            - "/etc/git2consul.d/git2consul.json"
+            - "--endpoint"
+            # 这里不能写成"consul"，因为git2consul使用的alpine Linux存在bug，找不到主机名。
+            # 详见：https://stackoverflow.com/questions/47298093/alpine-container-not-able-to-resolve-hostname
+            - "consul.default.svc.cluster.local"
+            - "--port"
+            - "8500"
+      restartPolicy: Always
+      volumes:
+        - name: git2consul-config
+          hostPath:
+            # 该路径看自己机器的路径进行修改。
+            path: /Users/reno/develop/code_mine/spring-cloud-yes/kubernetes/config/git2consul-config/
+  selector:
+    matchLabels:
+      app: git2consul
+
+# ref: https://hub.docker.com/r/cimpress/git2consul

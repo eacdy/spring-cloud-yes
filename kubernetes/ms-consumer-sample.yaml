@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-consumer-sample
+  labels:
+    app: ms-consumer-sample
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: ms-consumer-sample
+      labels:
+        app: ms-consumer-sample
+    spec:
+      containers:
+        - name: ms-consumer-sample
+          image: reg.itmuch.com/itmuch/ms-consumer-sample
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: PROFILE
+              value: "k8s"
+            - name: CONSUL_HOST
+              value: "consul"
+            - name: CONSUL_PORT
+              value: "8500"
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: ms-consumer-sample
