@@ -29,6 +29,9 @@ spec:
         - name: keycloak
           image: jboss/keycloak:5.0.0
           imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - mountPath: /tmp/
+              name: keycloak-init
           env:
             - name: DB_VENDOR
               value: h2
@@ -36,7 +39,16 @@ spec:
               value: admin
             - name: KEYCLOAK_PASSWORD
               value: admin
+            - name: KEYCLOAK_IMPORT
+              value: /tmp/realm-export.json
       restartPolicy: Always
+      volumes:
+        - name: keycloak-init
+          hostPath:
+            # 该路径看自己机器的路径进行修改。
+            path: /Users/reno/develop/code_mine/spring-cloud-yes/kubernetes/config/keycloak
   selector:
     matchLabels:
       app: keycloak
+
+# ref：https://hub.docker.com/r/jboss/keycloak

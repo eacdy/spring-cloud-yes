@@ -33,3 +33,5 @@ data
 db-data/
 jenkins/
 sonarqube/
+
+hsperfdata_jboss
