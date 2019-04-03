@@ -61,6 +61,10 @@
 
 
 
+## Kubernetes部署
+
+详见：[Kubernetes部署指南](doc/Kubernetes部署.md) ，包含从0部署的手把手步骤。
+
 
 
 ## TODO
